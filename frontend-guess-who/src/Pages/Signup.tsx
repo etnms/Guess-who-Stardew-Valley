@@ -13,12 +13,12 @@ function Signup() {
     const confirmPassword: string = (
       document.querySelector("input[name='confirm-password']") as HTMLInputElement
     ).value;
-    console.log(username, email, password, confirmPassword);
+
     axios
       .post(backend, { username, email, password, confirmPassword })
       .then((res) => {
-        navigate("/");
-        console.log(res);
+        localStorage.setItem("svgw-token", res.data.token);
+        navigate("/dashboard");
       })
       .catch((err) => console.log(err));
   }

@@ -1,25 +1,21 @@
-import styles from "./App.module.css";
-import namesData from "./names.json";
-import Card from "./Components/Card";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Dashboard from "./Pages/Dashboard";
+import Login from "./Pages/Login";
+import Signup from "./Pages/Signup";
+import Game from "./Pages/Game";
+import Home from "./Pages/Home";
 
 function App() {
-  function displayCards(player2: boolean) {
-    return namesData.map((element) => (
-      <Card name={element} key={`character_${element}`} player2={player2}/>
-    ));
-  }
   return (
-    <div className="App">
-      <h1>Stardew valley guess who</h1>
-      <h2>Player 2</h2>
-      <div className={`${styles["card-display"]} ${styles.opponent}`}>
-        {displayCards(true)}
-      </div>
-      <h2>You (Player1)</h2>
-      <div className={styles["card-display"]}>
-        {displayCards(false)}
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/game/:id" element={<Game />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

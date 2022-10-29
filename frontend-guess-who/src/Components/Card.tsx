@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import styles from "./Card.module.css";
 
-interface cards {
+interface ICards {
   name: string;
   player2: boolean;
 }
 
-function Card(props: React.PropsWithChildren<cards>) {
+function Card(props: React.PropsWithChildren<ICards>) {
   const { name, player2 } = props;
 
   const [isDiscarded, setIsDiscarded] = useState<boolean>(false);
@@ -44,7 +44,7 @@ function Card(props: React.PropsWithChildren<cards>) {
       data-type="card"
       onClick={(e) => discardCard(e)}>
       <p className={styles.name}>{name}</p>
-      <img src={`http://localhost:8000/api/images/${name}`} alt={name}></img>
+      <img src={`${process.env.REACT_APP_SVGW_BACKEND}/api/images/${name}`} alt={name}></img>
       {isDiscarded ? (
         <button className={styles["cancel-btn"]} onClick={(e) => cancelDiscard(e)}>
           Cancel

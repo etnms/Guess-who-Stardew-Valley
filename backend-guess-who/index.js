@@ -1,9 +1,11 @@
 const express = require("express");
 const cors = require("cors");
+const dashboardRoute = require("./routes/dashboardRoute");
+const userSignupRoute = require("./routes/authRoute");
 const imagesRoute = require("./routes/imagesRoute");
-const userSignupRoute = require("./routes/authRoute")
+const gamesRoute = require("./routes/gamesRoute");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const app = express();
 
@@ -15,14 +17,18 @@ app.use(
     type: "*/*",
   })
 );
+
 app.use(cors({ origin: FRONTEND }));
 
-app.use("/", imagesRoute);
+// dashboard
+app.use("/", dashboardRoute)
+// auth
 app.use("/", userSignupRoute);
+//images
+app.use("/", imagesRoute);
+//games
+app.use("/", gamesRoute)
 
-app.get("/", (req, res) => {
-  res.send("hi");
-});
 
 const server = app.listen(PORT, () => {
   console.log(`App is listening on port ${PORT}`);

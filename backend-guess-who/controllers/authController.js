@@ -21,7 +21,14 @@ exports.userSignup = (req, res) => {
           (err, result) => {
             if (err) {
               return res.status(400).json("Error");
-            } else return res.status(200).json("User registered");
+            } else {
+              console.log(result);
+              // Log in user
+              jwt.sign(result.rows[0], process.env.JWT_SVGW_TOKEN, { expiresIn: "7d" }, (err, token) => {
+                if (err) return res.sendStatus(403);
+                return res.status(200).json({ token: `Bearer ${token}`, message: "User created" });
+              });
+            }
           }
         );
       }
@@ -49,17 +56,12 @@ exports.userLogin = (req, res) => {
         }
         if (!results) return res.status(400).json("Incorrect username or password");
         if (results) {
-          res.status(200).json("Logged in");
+          // Log in user
+          jwt.sign(result.rows[0], process.env.JWT_SVGW_TOKEN, { expiresIn: "7d" }, (err, token) => {
+            if (err) return res.status(400).json("Incorrect username or password");
+            return res.status(200).json({ token: `Bearer ${token}` });
+          });
         }
-        /*
-            if (result) {
-              // Log in user
-              jwt.sign({ user }, process.env.JWTKEY, { expiresIn: "7d" }, (err, token) => {
-                if (err) return res.status(400).json("Incorrect username or password");
-                return res.status(200).json({ token: `Bearer ${token}` });
-              });
-            }
-            */
       });
     }
   });

@@ -12,12 +12,11 @@ function Login() {
     const username: string = (document.querySelector("input[name='username']") as HTMLInputElement).value;
     const password: string = (document.querySelector("input[name='password']") as HTMLInputElement).value;
 
-    console.log(username, password);
     axios
       .post(backend, { username, password })
       .then((res) => {
-        navigate("/");
-        console.log(res);
+        localStorage.setItem("svgw-token", res.data.token);
+        navigate("/dashboard");
       })
       .catch((err) => console.log(err));
   }

@@ -3,22 +3,11 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./Pages/Login";
-import Signup from "./Pages/Signup";
-import Game from "./Pages/Game";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/signup" element={<Signup/>}/>
-        <Route path="/game" element={<Game/>}/>
-      </Routes>
-    </BrowserRouter>
+    <App/>
   </React.StrictMode>
 );
 

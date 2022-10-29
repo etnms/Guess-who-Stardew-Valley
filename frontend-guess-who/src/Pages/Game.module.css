@@ -1,0 +1,8 @@
+.card-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2px;
+    margin: 1rem;
+}
