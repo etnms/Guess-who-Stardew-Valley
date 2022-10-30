@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import styles from "./Card.module.css";
+import { io } from "socket.io-client";
 
 interface ICards {
   name: string;
   player2: boolean;
+  sessionId: string | undefined;
 }
 
 function Card(props: React.PropsWithChildren<ICards>) {
-  const { name, player2 } = props;
+  const { name, player2, sessionId } = props;
 
   const [isDiscarded, setIsDiscarded] = useState<boolean>(false);
 
-  function discardCard(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+  function discardCard(e: React.MouseEvent<HTMLDivElement, MouseEvent>, player2: boolean) {
+    
+    // If cards from player 2 then can't change them
+    if (player2) return;
     // Check if what is clicked is the card or a child of the card
     let type: string | undefined = "";
     // If card then identify the type, else do nothin
@@ -26,8 +31,10 @@ function Card(props: React.PropsWithChildren<ICards>) {
     } else {
       e.currentTarget.classList.add(`${styles.discarded}`);
     }
-
     setIsDiscarded(true);
+    const username = sessionStorage.getItem("username")
+    const socket = io("http://127.0.0.1:8000");
+    socket.emit("discard", {name, sessionId, username});
   }
 
   function cancelDiscard(e: React.MouseEvent<HTMLButtonElement>) {
@@ -42,7 +49,8 @@ function Card(props: React.PropsWithChildren<ICards>) {
     <div
       className={`${styles.card} ${player2 ? styles.opponent : ""}`}
       data-type="card"
-      onClick={(e) => discardCard(e)}>
+      data-card-name= {player2? name : `self-${name}`}
+      onClick={(e) => discardCard(e, player2)}>
       <p className={styles.name}>{name}</p>
       <img src={`${process.env.REACT_APP_SVGW_BACKEND}/api/images/${name}`} alt={name}></img>
       {isDiscarded ? (

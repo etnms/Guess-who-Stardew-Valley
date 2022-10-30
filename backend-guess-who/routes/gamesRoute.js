@@ -4,6 +4,7 @@ const gameController = require("../controllers/gamesController");
 
 const router = express.Router();
 
-router.get("/api/games", verifyToken.verifyToken, gameController.createGame)
+router.post("/api/games", verifyToken.verifyToken, gameController.createGame);
+router.get("/api/games", verifyToken.verifyToken, gameController.retrieveActiveGames);
 
 module.exports = router;

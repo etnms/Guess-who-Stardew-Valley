@@ -6,3 +6,19 @@
     gap: 2px;
     margin: 1rem;
 }
+
+.discarded {
+    background-color: yellow;
+}
+
+.title {
+    
+}
+.hidden {
+    visibility: hidden;
+    height: 0;
+}
+
+.opponent {
+
+}

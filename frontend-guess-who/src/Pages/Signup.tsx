@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 function Signup() {
   const navigate = useNavigate();
+
   function signup(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const backend = "http://localhost:8000/api/auth/signup";
+
     const username: string = (document.querySelector("input[name='username']") as HTMLInputElement).value;
     const email: string = (document.querySelector("input[name='email']") as HTMLInputElement).value;
     const password: string = (document.querySelector("input[name='password']") as HTMLInputElement).value;
@@ -15,7 +16,12 @@ function Signup() {
     ).value;
 
     axios
-      .post(backend, { username, email, password, confirmPassword })
+      .post(`${process.env.REACT_APP_SVGW_BACKEND}/api/auth/signup`, {
+        username,
+        email,
+        password,
+        confirmPassword,
+      })
       .then((res) => {
         localStorage.setItem("svgw-token", res.data.token);
         navigate("/dashboard");

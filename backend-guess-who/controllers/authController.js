@@ -16,13 +16,13 @@ exports.userSignup = (req, res) => {
       if (err) return res.status(400).json("There was a problem");
       else {
         pool.query(
-          "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)",
+          "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING username, email, password",
           [username, email, hashedPassword],
           (err, result) => {
             if (err) {
+              console.log(err);
               return res.status(400).json("Error");
             } else {
-              console.log(result);
               // Log in user
               jwt.sign(result.rows[0], process.env.JWT_SVGW_TOKEN, { expiresIn: "7d" }, (err, token) => {
                 if (err) return res.sendStatus(403);
@@ -44,7 +44,7 @@ exports.userLogin = (req, res) => {
     return res.status(400).json("Empty fields");
   }
 
-  pool.query(`SELECT * FROM users WHERE username = $1`, [username], (err, result) => {
+  pool.query("SELECT * FROM users WHERE username = $1", [username], (err, result) => {
     if (err) {
       console.log(err);
       return res.status(400).json("Error db");

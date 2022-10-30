@@ -8,12 +8,11 @@ function Login() {
   function login(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const backend = "http://localhost:8000/api/auth/login";
     const username: string = (document.querySelector("input[name='username']") as HTMLInputElement).value;
     const password: string = (document.querySelector("input[name='password']") as HTMLInputElement).value;
 
     axios
-      .post(backend, { username, password })
+      .post(`${process.env.REACT_APP_SVGW_BACKEND}/api/auth/login`, { username, password })
       .then((res) => {
         localStorage.setItem("svgw-token", res.data.token);
         navigate("/dashboard");

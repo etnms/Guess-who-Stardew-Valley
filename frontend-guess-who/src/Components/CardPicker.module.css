@@ -1,0 +1,33 @@
+.card {
+    border: 2px solid red;
+    width: 6rem;
+    height: 8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background-color: red;
+    gap: 2rem;
+    position: relative;
+    cursor: pointer;
+}
+
+.card > img {
+    height: 64px;
+    width: 64px;
+    background-color: white;
+    position: absolute;
+    bottom: 5px;
+}
+
+.card > .name {
+    background-color: white;
+    position: absolute;
+    top: 5px;
+    cursor: pointer;
+}
+
+.selected {
+    
+}
