@@ -1,10 +1,18 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import styles from "./Login.module.css";
 
 function Login() {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (localStorage.getItem("darktheme") === "darktheme") {
+      document.documentElement.setAttribute("data-color-scheme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-color-scheme", "light");
+    }
+  });
   function login(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -20,14 +28,16 @@ function Login() {
       .catch((err) => console.log(err));
   }
   return (
-    <div>
-      <form onSubmit={(e) => login(e)}>
+    <div className={styles.page}>
+      <form onSubmit={(e) => login(e)} className={styles.form}>
         <h1>Login</h1>
         <label htmlFor="username">Username</label>
         <input name="username"></input>
         <label htmlFor="email">Password</label>
         <input name="password" type="password"></input>
-        <button type="submit">Submit</button>
+        <button type="submit" className={styles.btn}>
+          Login
+        </button>
       </form>
     </div>
   );

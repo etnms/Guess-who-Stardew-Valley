@@ -56,22 +56,14 @@ io.on("connection", (socket) => {
     socket.emit("numberPlayers", roomSize);
   });
 
-  socket.on("discard", ({ name, sessionId, username }) => {
-    console.log(name, sessionId, username);
+  socket.on("discard", ({ name, sessionId, username, isCancelled }) => {
+    io.emit("discardPlayer", { name, sessionId, username, isCancelled });
+  });
+/*
+  socket.on("cancelDiscard", ({ name, sessionId, username }) => {
     io.emit("discardPlayer", { name, sessionId, username });
   });
-
-  /*
-  socket.on("connect", () => {
-    console.log("client connected")
-    //socket.join(args);
-  });
-
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-
-  })
-  */
+*/
 });
 
 server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));

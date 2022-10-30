@@ -1,24 +1,155 @@
-.card-display {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 2px;
-    margin: 1rem;
-}
-
-.discarded {
-    background-color: yellow;
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .title {
-    
+  text-align: center;
+  font-size: 1.8rem;
 }
+
+.subtitle {
+  text-align: center;
+  font-size: 1.6rem;
+}
+.nb-players {
+  margin: 1rem;
+}
+
+.wrapper-select {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.subtitle {
+  font-size: 1.6rem;
+}
+
+.selected-text {
+  font-size: 1.3rem;
+  margin: 0.4rem 0;
+}
+
+.error-message {
+  color: var(--red);
+  font-size: 1.2rem;
+  animation: shake 300ms;
+}
+code {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.card-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 1rem;
+}
+
+.discarded {
+  background-color: var(--discarded);
+  filter: blur(1px);
+}
+
 .hidden {
-    visibility: hidden;
-    height: 0;
+  visibility: hidden;
+  height: 0;
 }
 
 .opponent {
+}
 
+.btn-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+  gap: 1rem;
+}
+
+.btn {
+  font-size: 1.5rem;
+  border-radius: 0.3rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border: 2px solid black;
+}
+
+.btn-confirm {
+  background-color: var(--confirm);
+  color: white;
+}
+
+.btn-confirm:hover {
+  background-color: var(--confirm-hover);
+  color: white;
+}
+
+.btn-leave {
+  background-color: var(--bg);
+}
+
+.btn-leave:hover {
+  background-color: var(--bg-hover);
+  transition: 200ms;
+}
+
+.btn-end {
+  background-color: var(--red);
+  color: white;
+}
+
+.btn-end:hover {
+  background-color: var(--red-hover);
+  transition: 200ms;
+}
+
+.wrapper-main-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-hide-cards {
+  background-color: var(--bg);
+}
+
+.btn-hide-cards:hover {
+    background-color: var(--bg-hover);
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(3px, 0);
+  }
+  12.5% {
+    transform: translate(0px, 0);
+  }
+  25% {
+    transform: translate(-3px, 0);
+  }
+  50% {
+    transform: translate(0px, 0);
+  }
+  62.5% {
+    transform: translate(3px, 0);
+  }
+  75% {
+    transform: translate(0px, 0);
+  }
+  87.5% {
+    transform: translate(-2px, 0);
+  }
+  100% {
+    transform: translate(0px, 0);
+  }
 }

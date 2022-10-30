@@ -3,6 +3,25 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: var(--bg-secondary);
+}
+
+.wrapper {
+    background-color: var(--bg);
+    margin: 1rem;
+    width: 96%;
+    text-align: center;
+    box-shadow: var(--elevation);
+    border-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-title {
+    font-size: 2.2rem;
+    margin: 1rem;
 }
 
 .title {
@@ -38,7 +57,7 @@
 }
 
 .btn:hover {
-    transform: scale(1.05);
+    scale: 1.05;
     transition: 300ms;
     cursor: pointer;
 }
@@ -68,4 +87,8 @@
     outline: none;
     border: 2px solid var(--bg-opposite);
     text-align: center;
+}
+
+.input-session:focus {
+    box-shadow: var(--box-shadow);
 }

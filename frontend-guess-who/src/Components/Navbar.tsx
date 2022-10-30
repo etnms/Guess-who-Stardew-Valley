@@ -32,9 +32,9 @@ function Navbar(props: React.PropsWithChildren<INavbarProps>) {
           <button onClick={() => signOut()} className={`${styles["btn"]} ${styles["btn-sign"]}`}>Sign out</button>
         </div>
       ) : (
-        <div>
-          <button onClick={() => navigate("/login")}>Login</button>
-          <button onClick={() => navigate("/signup")}>Sign up</button>
+        <div className={styles["nav-home"]}>
+          <button onClick={() => navigate("/login")}  className={`${styles["btn"]} ${styles["btn-login"]}`}>Login</button>
+          <button onClick={() => navigate("/signup")}  className={`${styles["btn"]} ${styles["btn-sign"]}`}>Sign up</button>
         </div>
       )}
     </nav>

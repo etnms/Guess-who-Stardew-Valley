@@ -34,7 +34,8 @@ function Card(props: React.PropsWithChildren<ICards>) {
     setIsDiscarded(true);
     const username = sessionStorage.getItem("username")
     const socket = io("http://127.0.0.1:8000");
-    socket.emit("discard", {name, sessionId, username});
+    const isCancelled = false;
+    socket.emit("discard", {name, sessionId, username, isCancelled});
   }
 
   function cancelDiscard(e: React.MouseEvent<HTMLButtonElement>) {
@@ -43,6 +44,10 @@ function Card(props: React.PropsWithChildren<ICards>) {
     const parent: HTMLElement | null = e.currentTarget.parentElement;
     parent?.classList.remove(`${styles.discarded}`);
     setIsDiscarded(false);
+    const username = sessionStorage.getItem("username")
+    const socket = io("http://127.0.0.1:8000");
+    const isCancelled = true;
+    socket.emit("discard", {name, sessionId, username, isCancelled});
   }
 
   return (

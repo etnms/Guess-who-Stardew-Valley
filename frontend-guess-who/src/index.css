@@ -17,9 +17,18 @@ html[data-color-scheme="light"] {
   --tertiary: #3b7bdb;
   --dark-blue: #232c33;
   --bg: white;
-  --bg-hover: #d1d1d1;
+  --bg-secondary: #eeeeee;
+  --bg-hover: #e0e0e0a1;
   --bg-opposite: black;
- 
+  --red: #D43F1E;
+  --red-hover: #A63117;
+  --confirm: #00872f;
+  --confirm-hover: #006E26;
+  --player1: #A23022;
+  --player2: #4F54CF;
+  --discarded: #0000000e;
+  --box-shadow: 3px 3px 7px -2px var(--primary);
+  --elevation: 0px 8px 10px 1px rgba(0, 0, 0, 0.301);
 }
 
 html[data-color-scheme="dark"] {

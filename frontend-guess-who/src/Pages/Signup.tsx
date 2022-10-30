@@ -1,9 +1,18 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import styles from "./Signup.module.css";
 
 function Signup() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("darktheme") === "darktheme") {
+      document.documentElement.setAttribute("data-color-scheme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-color-scheme", "light");
+    }
+  });
 
   function signup(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -30,8 +39,8 @@ function Signup() {
   }
 
   return (
-    <div>
-      <form onSubmit={(e) => signup(e)}>
+    <div className={styles.page}>
+      <form onSubmit={(e) => signup(e)} className={styles.form}>
         <h1>Signup</h1>
         <label htmlFor="username">Username</label>
         <input name="username"></input>
@@ -41,7 +50,7 @@ function Signup() {
         <input name="password" type="password"></input>
         <label htmlFor="confirm-password">Confirm password</label>
         <input name="confirm-password" type="password"></input>
-        <button type="submit">Submit</button>
+        <button type="submit" className={styles.btn}>Submit</button>
       </form>
     </div>
   );

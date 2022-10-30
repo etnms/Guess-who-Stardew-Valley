@@ -20,6 +20,12 @@ function Dashboard() {
   const [arrayGames, setArrayGames] = useState<any>([]);
 
   useEffect(() => {
+    if (localStorage.getItem("darktheme") === "darktheme") {
+      document.documentElement.setAttribute("data-color-scheme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-color-scheme", "light");
+    }
+
     axios
       .get(`${process.env.REACT_APP_SVGW_BACKEND}/api/dashboard`, { headers: { authorization: token! } })
       .then((res) => {
@@ -65,20 +71,25 @@ function Dashboard() {
   return (
     <div className={styles.dashboard}>
       <Navbar isLoggedIn={isLoggedIn} username={username} />
-      <div className={styles.list}>
-        <h1 className={styles.title}>Active sessions:</h1>
-        {displayActiveGames()}
-      </div>
-      <div className={styles["game-options"]}>
-        <button onClick={() => createGame()} className={`${styles["btn"]} ${styles["btn-create"]}`}>
-          Create a game
-        </button>
-        <h2 className={styles["join-text"]}>Or join a game</h2>
-        <label htmlFor="game-id-input" className={styles["label-input-session"]}>Enter the session id of the game you want to join</label>
-        <input name="game-id-input" className={styles["input-session"]}></input>
-        <button onClick={() => joinGame()} className={`${styles["btn"]} ${styles["btn-join"]}`}>
-          Join game
-        </button>
+      <div className={styles.wrapper}>
+        <h1 className={styles["main-title"]}>Guess who - Stardew Valley edition</h1>
+        <div className={styles.list}>
+          <h2 className={styles.title}>Active sessions:</h2>
+          {displayActiveGames()}
+        </div>
+        <div className={styles["game-options"]}>
+          <button onClick={() => createGame()} className={`${styles["btn"]} ${styles["btn-create"]}`}>
+            Create a game
+          </button>
+          <h3 className={styles["join-text"]}>Or join a game</h3>
+          <label htmlFor="game-id-input" className={styles["label-input-session"]}>
+            Enter the session id of the game you want to join
+          </label>
+          <input name="game-id-input" className={styles["input-session"]}></input>
+          <button onClick={() => joinGame()} className={`${styles["btn"]} ${styles["btn-join"]}`}>
+            Join game
+          </button>
+        </div>
       </div>
     </div>
   );
