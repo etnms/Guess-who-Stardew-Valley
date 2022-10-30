@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 
 function Login() {
-  const navigate = useNavigate();
+
+  const navigate: NavigateFunction = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem("darktheme") === "darktheme") {
@@ -13,6 +14,7 @@ function Login() {
       document.documentElement.setAttribute("data-color-scheme", "light");
     }
   });
+  
   function login(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 

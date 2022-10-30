@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavigateFunction, useNavigate, useParams } from "react-router-dom";
 import Card from "../Components/Card";
 import CardPicker from "../Components/CardPicker";
 import namesData from "../names.json";
@@ -8,10 +8,11 @@ import { io } from "socket.io-client";
 import axios from "axios";
 
 function Game() {
-  const { id } = useParams();
+  const { id } = useParams<string>();
 
-  const navigate = useNavigate();
-  const token = localStorage.getItem("svgw-token");
+  const token: string | null = localStorage.getItem("svgw-token");
+  const navigate: NavigateFunction = useNavigate();
+
   const [selectedCard, setSelectedCard] = useState<string>("");
   const [cardPicked, setCardPicked] = useState<boolean>();
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -25,6 +26,15 @@ function Game() {
     } else {
       document.documentElement.setAttribute("data-color-scheme", "light");
     }
+
+    axios
+      .get(`${process.env.REACT_APP_SVGW_BACKEND}/api/games/${id}`, {headers: {authorization: token!}})
+      .then((res) => {
+      })
+      .catch((err) => {
+        navigate("/dashboard")
+      });
+
     const socket = io("http://127.0.0.1:8000");
 
     socket.emit("join", id);
@@ -43,17 +53,12 @@ function Game() {
       // Check if in same game to apply discard
       if (sessionId === id) discardOther(name, username, isCancelled);
     });
-/*
-    socket.on("cancelDiscard", ({ name, sessionId, username }) => {
-      console.log("cancel", name, sessionId, username)
-      if (sessionId === id) discardOther(name, username, true);
-    });
-*/
+
     return () => {
       socket.off("numberPlayers");
       socket.off("discardPlayer");
     };
-  }, [navigate, id]);
+  }, [navigate, id, token]);
 
   function displayCardsToPick() {
     return namesData.map((element) => (
@@ -81,7 +86,6 @@ function Game() {
     }
   }
   function discardOther(name: string, username: string, cancelDiscard: boolean) {
-    console.log(cancelDiscard)
     if (!cancelDiscard)
       if (username !== sessionStorage.getItem("username")) {
         let card = document.querySelector(`[data-card-name='${name}']`);
@@ -116,44 +120,49 @@ function Game() {
   }
 
   return (
-    <main>
-      <h1 className={styles.title}>Session id: {id}</h1>
-      <span className={styles["nb-players"]}>Number of players: {numberPlayers} </span>
+    <div className={styles.wrapper}>
+      <main className={styles.main}>
+        <h1 className={styles.title}>Session id: {id}</h1>
+        <span className={styles["nb-players"]}>Number of players: {numberPlayers} </span>
 
-      {!cardPicked ? (
-        <div className={styles["wrapper-select"]}>
-          <h2 className={styles.subtitle}>Pick a character</h2>
-          <span className={styles["selected-text"]}>
-            Selected character is: <code>{selectedCard} </code>
-          </span>
-          <button onClick={() => confirmSelection()} className={`${styles.btn} ${styles["btn-confirm"]}`}>
-            Confirm selection
+        {!cardPicked ? (
+          <div className={styles["wrapper-select"]}>
+            <h2 className={styles.subtitle}>Pick a character</h2>
+
+            {errorMessage?.length === 0 ? null : (
+              <span className={styles["error-message"]}>{errorMessage}</span>
+            )}
+            <div className={styles["card-display"]}>{displayCardsToPick()}</div>
+            <span className={styles["selected-text"]}>
+              Selected character is: <code>{selectedCard} </code>
+            </span>
+            <button onClick={() => confirmSelection()} className={`${styles.btn} ${styles["btn-confirm"]}`}>
+              Confirm selection
+            </button>
+          </div>
+        ) : (
+          <div className={styles["wrapper-main-game"]}>
+            <button
+              onClick={() => hideOponnentCards()}
+              className={`${styles.btn} ${styles["btn-hide-cards"]}`}>
+              {btnHideText}
+            </button>
+            <h2 className={styles.subtitle}>Opponent</h2>
+            <div className={`${styles["card-display"]} ${styles.opponent}`}>{displayCards(true)}</div>
+            <h2 className={styles.subtitle}>You</h2>
+            <div className={styles["card-display"]}>{displayCards(false)}</div>
+          </div>
+        )}
+        <div className={styles["btn-wrapper"]}>
+          <button onClick={() => navigate("/dashboard")} className={`${styles.btn} ${styles["btn-leave"]}`}>
+            Leave game
           </button>
-          {errorMessage?.length === 0 ? null : (
-            <span className={styles["error-message"]}>{errorMessage}</span>
-          )}
-          <div className={styles["card-display"]}>{displayCardsToPick()}</div>
-        </div>
-      ) : (
-        <div className={styles["wrapper-main-game"]}>
-          <button onClick={() => hideOponnentCards()} className={`${styles.btn} ${styles["btn-hide-cards"]}`}>
-            {btnHideText}
+          <button onClick={() => endGame(id)} className={`${styles.btn} ${styles["btn-end"]}`}>
+            End game
           </button>
-          <h2 className={styles.subtitle}>Opponent</h2>
-          <div className={`${styles["card-display"]} ${styles.opponent}`}>{displayCards(true)}</div>
-          <h2 className={styles.subtitle}>You</h2>
-          <div className={styles["card-display"]}>{displayCards(false)}</div>
         </div>
-      )}
-      <div className={styles["btn-wrapper"]}>
-        <button onClick={() => navigate("/dashboard")} className={`${styles.btn} ${styles["btn-leave"]}`}>
-          Leave game
-        </button>
-        <button onClick={() => endGame(id)} className={`${styles.btn} ${styles["btn-end"]}`}>
-          End game
-        </button>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
 

@@ -41,7 +41,6 @@ const io = new Server(server, {
 
 const MAXNUMBERPLAYER = 4;
 io.on("connection", (socket) => {
-  // console.log("socket id is" + socket.id)
 
   socket.on("join", (id) => {
     socket.join(id);
@@ -59,11 +58,7 @@ io.on("connection", (socket) => {
   socket.on("discard", ({ name, sessionId, username, isCancelled }) => {
     io.emit("discardPlayer", { name, sessionId, username, isCancelled });
   });
-/*
-  socket.on("cancelDiscard", ({ name, sessionId, username }) => {
-    io.emit("discardPlayer", { name, sessionId, username });
-  });
-*/
+
 });
 
 server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));

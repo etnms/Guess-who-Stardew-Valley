@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import ActiveSessionLink from "../Components/ActiveSessionLink";
 import Navbar from "../Components/Navbar";
 import styles from "./Dashboard.module.css";
@@ -11,8 +11,8 @@ interface IArrayGames {
 }
 
 function Dashboard() {
-  const token = localStorage.getItem("svgw-token");
-  const navigate = useNavigate();
+  const token: string | null = localStorage.getItem("svgw-token");
+  const navigate: NavigateFunction = useNavigate();
   const [username, setUsername] = useState<string>("");
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -72,7 +72,7 @@ function Dashboard() {
     <div className={styles.dashboard}>
       <Navbar isLoggedIn={isLoggedIn} username={username} />
       <div className={styles.wrapper}>
-        <h1 className={styles["main-title"]}>Guess who - Stardew Valley edition</h1>
+        <h1 className={styles["main-title"]}>Guess who? - Stardew Valley edition</h1>
         <div className={styles.list}>
           <h2 className={styles.title}>Active sessions:</h2>
           {displayActiveGames()}

@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+  background-color: var(--bg-secondary);
 }
 
 .form {
@@ -17,6 +18,8 @@
   height: 85vh;
   width: 40vw;
   gap: 0.5rem;
+  background-color: var(--bg);
+  box-shadow: var(--elevation);
 }
 
 .form > * {

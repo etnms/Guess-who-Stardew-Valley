@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import styles from "./Navbar.module.css"; 
 
 interface INavbarProps {
   isLoggedIn: boolean;
   username: string;
 }
+
 function Navbar(props: React.PropsWithChildren<INavbarProps>) {
   const { isLoggedIn, username } = props;
 
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
 
   function signOut() {
     localStorage.removeItem("svgw-token");

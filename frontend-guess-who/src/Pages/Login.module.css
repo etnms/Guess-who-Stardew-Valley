@@ -1,46 +1,49 @@
 .page {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: var(--bg-secondary);
 }
 
 .form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid var(--bg-opposite);
-    border-radius: 1rem;
-    padding: 8px;
-    height: 60vh;
-    width:40vw;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-opposite);
+  border-radius: 1rem;
+  padding: 8px;
+  height: 60vh;
+  width: 40vw;
+  gap: 0.5rem;
+  background-color: var(--bg);
+  box-shadow: var(--elevation);
 }
 
 .form > * {
-    font-size: 1.4rem;
+  font-size: 1.4rem;
 }
 
-.form >input {
-    outline: none;
-    border-radius: 1rem;
-    border: 2px solid var(--bg-opposite);
-    padding: 0.3rem;
+.form > input {
+  outline: none;
+  border-radius: 1rem;
+  border: 2px solid var(--bg-opposite);
+  padding: 0.3rem;
 }
 
-.form >input:focus {
-    box-shadow: var(--box-shadow);
+.form > input:focus {
+  box-shadow: var(--box-shadow);
 }
 
 .btn {
-    background-color: var(--primary);
-    padding: 0.5rem 1rem;
-    border-radius: 2rem;
-    cursor: pointer;
+  background-color: var(--primary);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  cursor: pointer;
 }
 .btn:hover {
-    scale: 1.05;
-    transition: 200ms;
+  scale: 1.05;
+  transition: 200ms;
 }

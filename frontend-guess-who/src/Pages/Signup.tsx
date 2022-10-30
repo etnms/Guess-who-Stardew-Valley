@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import styles from "./Signup.module.css";
 
 function Signup() {
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem("darktheme") === "darktheme") {

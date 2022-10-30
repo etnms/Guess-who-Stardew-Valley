@@ -1,14 +1,24 @@
-main {
+.wrapper {
+  background-color: var(--bg-secondary);
+  padding: 0.8rem;
+  
+}
+
+.main {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+  background-color: var(--bg);
+  border-radius: 1rem;
+  box-shadow: var(--elevation);
 }
 
 .title {
   text-align: center;
   font-size: 1.8rem;
+  margin-top: 0.5rem;
 }
 
 .subtitle {

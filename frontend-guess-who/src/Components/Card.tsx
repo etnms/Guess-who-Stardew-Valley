@@ -14,7 +14,6 @@ function Card(props: React.PropsWithChildren<ICards>) {
   const [isDiscarded, setIsDiscarded] = useState<boolean>(false);
 
   function discardCard(e: React.MouseEvent<HTMLDivElement, MouseEvent>, player2: boolean) {
-    
     // If cards from player 2 then can't change them
     if (player2) return;
     // Check if what is clicked is the card or a child of the card
@@ -31,11 +30,13 @@ function Card(props: React.PropsWithChildren<ICards>) {
     } else {
       e.currentTarget.classList.add(`${styles.discarded}`);
     }
+
+    // JS and server logic
     setIsDiscarded(true);
-    const username = sessionStorage.getItem("username")
     const socket = io("http://127.0.0.1:8000");
-    const isCancelled = false;
-    socket.emit("discard", {name, sessionId, username, isCancelled});
+    const username: string | null = sessionStorage.getItem("username");
+    const isCancelled: boolean = false;
+    socket.emit("discard", { name, sessionId, username, isCancelled });
   }
 
   function cancelDiscard(e: React.MouseEvent<HTMLButtonElement>) {
@@ -43,18 +44,20 @@ function Card(props: React.PropsWithChildren<ICards>) {
     // Get the card (parent of the button)
     const parent: HTMLElement | null = e.currentTarget.parentElement;
     parent?.classList.remove(`${styles.discarded}`);
+
+    // JS and server logic
     setIsDiscarded(false);
-    const username = sessionStorage.getItem("username")
     const socket = io("http://127.0.0.1:8000");
-    const isCancelled = true;
-    socket.emit("discard", {name, sessionId, username, isCancelled});
+    const username: string | null = sessionStorage.getItem("username");
+    const isCancelled: boolean = true;
+    socket.emit("discard", { name, sessionId, username, isCancelled });
   }
 
   return (
     <div
       className={`${styles.card} ${player2 ? styles.opponent : ""}`}
       data-type="card"
-      data-card-name= {player2? name : `self-${name}`}
+      data-card-name={player2 ? name : `self-${name}`}
       onClick={(e) => discardCard(e, player2)}>
       <p className={styles.name}>{name}</p>
       <img src={`${process.env.REACT_APP_SVGW_BACKEND}/api/images/${name}`} alt={name}></img>
