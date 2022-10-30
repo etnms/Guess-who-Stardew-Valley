@@ -39,21 +39,27 @@ const io = new Server(server, {
   },
 });
 
+const MAXNUMBERPLAYER = 4;
 io.on("connection", (socket) => {
-  console.log("socket id is" + socket.id)
+  // console.log("socket id is" + socket.id)
 
   socket.on("join", (id) => {
     socket.join(id);
+
     const roomSize = io.sockets.adapter.rooms.get(id).size;
+    if (roomSize > MAXNUMBERPLAYER) {
+      let roomIsFull = true;
+      io.emit("fullRoom", roomIsFull);
+      return;
+    }
     //console.log( io.sockets.adapter.rooms.get(id).size)
     socket.emit("numberPlayers", roomSize);
-  })
+  });
 
-  socket.on("discard", ({name, sessionId, username}) => {
-
+  socket.on("discard", ({ name, sessionId, username }) => {
     console.log(name, sessionId, username);
-    io.emit("discardPlayer", ({name, sessionId, username}))
-  })
+    io.emit("discardPlayer", { name, sessionId, username });
+  });
 
   /*
   socket.on("connect", () => {

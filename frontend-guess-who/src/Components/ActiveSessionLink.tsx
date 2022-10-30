@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import styles from "./ActiveSessionLink.module.css";
 
 interface IActiveSessionProps {
   sessionId: string;
@@ -11,9 +12,9 @@ function ActiveSessionLink(props: React.PropsWithChildren<IActiveSessionProps>) 
   const navigate = useNavigate();
 
   return (
-    <div>
-        <button onClick={() => navigate(`/games/${sessionId}`)}> {sessionId} - Ends at {time}</button>
-    </div>
+    <button onClick={() => navigate(`/games/${sessionId}`)} className={styles.link}>
+      {sessionId} - Ends at {time}
+    </button>
   );
 }
 

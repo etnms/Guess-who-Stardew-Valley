@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import styles from "./Navbar.module.css"; 
 
 interface INavbarProps {
   isLoggedIn: boolean;
+  username: string;
 }
 function Navbar(props: React.PropsWithChildren<INavbarProps>) {
-  const { isLoggedIn } = props;
+  const { isLoggedIn, username } = props;
 
   const navigate = useNavigate();
 
@@ -13,20 +15,29 @@ function Navbar(props: React.PropsWithChildren<INavbarProps>) {
     localStorage.removeItem("svgw-token");
     navigate("/");
   }
+
+  useEffect(() => {
+    if (localStorage.getItem("darktheme") === "darktheme") {
+      document.documentElement.setAttribute("data-color-scheme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-color-scheme", "light");
+    }
+  })
   
   return (
-    <div>
+    <nav className={styles.nav}>
       {isLoggedIn ? (
-        <nav>
-          <button onClick={() => signOut()}>Sign out</button>
-        </nav>
+        <div className={styles["nav-signed"]}>
+          <span className={styles["nav-text"]}>Welcome {username}</span>
+          <button onClick={() => signOut()} className={`${styles["btn"]} ${styles["btn-sign"]}`}>Sign out</button>
+        </div>
       ) : (
-        <nav>
+        <div>
           <button onClick={() => navigate("/login")}>Login</button>
           <button onClick={() => navigate("/signup")}>Sign up</button>
-        </nav>
+        </div>
       )}
-    </div>
+    </nav>
   );
 }
 

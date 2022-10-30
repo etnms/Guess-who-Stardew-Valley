@@ -1,0 +1,71 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 0.2rem;
+    margin-top: 1.5rem
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.game-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0;
+}
+
+.btn {
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+    margin: 0.4rem;
+    font-size: 1.5rem;
+    border: 3px solid var(--bg-opposite);
+    box-sizing: border-box;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    transition: 300ms;
+    cursor: pointer;
+}
+
+.btn-create {
+    background-color: var(--primary);
+}
+
+.btn-join {
+    background-color: var(--secondary);
+}
+
+.join-text {
+    margin: 0.3rem;
+    font-size: 1.3rem;
+}
+
+.label-input-session {
+    margin: 0.3rem;
+}
+
+.input-session {
+    font-size: 1.6rem;
+    padding: 0.2rem;
+    width: 95%;
+    border-radius: 1rem;
+    outline: none;
+    border: 2px solid var(--bg-opposite);
+    text-align: center;
+}

@@ -1,0 +1,13 @@
+.link {
+    font-size: 1rem;
+    border-radius: 0.4rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    background-color: var(--bg);
+}
+
+.link:hover {
+    background-color: var(--bg-hover);
+    transform: scale(1.05);
+    transition: 200ms;
+}

@@ -3,8 +3,8 @@ const { pool } = require("../pool");
 
 function createGameId(length) {
   let result = "";
-  let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let charactersLength = characters.length;
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
   for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
@@ -23,8 +23,7 @@ exports.createGame = (req, res) => {
           if (err) {
             return res.status(400).json("error db");
           } else {
-            console.log(results);
-            return res.json(results.rows[0]);
+            return res.json(sessionId);
           }
         }
       );
@@ -48,3 +47,22 @@ exports.retrieveActiveGames = (req, res) => {
     }
   });
 };
+
+exports.deleteGame = (req, res) => {
+  const sessionId = req.params.id;
+  jwt.verify(req.token, process.env.JWT_SVGW_TOKEN, (err, authData) => {
+    if (err) return res.sendStatus(403);
+    else {
+      pool.query("DELETE FROM games WHERE session_id = $1 AND creator = $2", [sessionId, authData.user_id], (err, results) => {
+        if (err){
+          console.log(err);
+          return res.status(400).json("Error deleting game");
+        }
+        else {
+          // TO DO if results.row = 0 then means other player; => can't delete
+          return res.status(200).json("Game deleted");
+        }
+      })
+    }
+  })
+}

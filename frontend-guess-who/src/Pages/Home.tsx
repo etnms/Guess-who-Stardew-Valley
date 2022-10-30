@@ -16,7 +16,7 @@ function Home() {
   });
   return (
     <div>
-      <Navbar isLoggedIn={false} />
+      <Navbar isLoggedIn={false} username="" />
       <h1>Stardew valley guess who</h1>
     </div>
   );
