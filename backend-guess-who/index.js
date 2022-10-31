@@ -20,7 +20,7 @@ app.use(
   })
 );
 
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: FRONTEND }));
 
 // dashboard
 app.use("/", dashboardRoute);
@@ -35,30 +35,38 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: FRONTEND,
   },
 });
 
 const MAXNUMBERPLAYER = 4;
 io.on("connection", (socket) => {
-
+  let tmpId;
   socket.on("join", (id) => {
+    tmpId = id;
     socket.join(id);
-
     const roomSize = io.sockets.adapter.rooms.get(id).size;
+
     if (roomSize > MAXNUMBERPLAYER) {
       let roomIsFull = true;
-      io.emit("fullRoom", roomIsFull);
+      io.emit("fullRoom" + id, roomIsFull);
       return;
     }
-    //console.log( io.sockets.adapter.rooms.get(id).size)
-    socket.emit("numberPlayers", roomSize);
+
+    io.emit("numberPlayers", roomSize);
   });
 
   socket.on("discard", ({ name, sessionId, username, isCancelled }) => {
     io.emit("discardPlayer", { name, sessionId, username, isCancelled });
   });
 
+  socket.on("disconnect", () => {
+    let room = io.sockets.adapter.rooms.get(tmpId);
+    if (room === undefined) return;
+    const roomSize = room.size;
+    io.emit("numberPlayers", roomSize);
+  })
 });
+
 
 server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));

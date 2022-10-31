@@ -42,7 +42,7 @@ function Dashboard() {
       .then((res) => {
         setArrayGames(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   }, [navigate, token]);
 
   function createGame() {

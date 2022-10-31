@@ -1,11 +1,12 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import ErrorMessage from "../Components/ErrorMessage";
 import styles from "./Login.module.css";
 
 function Login() {
-
   const navigate: NavigateFunction = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
     if (localStorage.getItem("darktheme") === "darktheme") {
@@ -14,7 +15,7 @@ function Login() {
       document.documentElement.setAttribute("data-color-scheme", "light");
     }
   });
-  
+
   function login(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -27,7 +28,12 @@ function Login() {
         localStorage.setItem("svgw-token", res.data.token);
         navigate("/dashboard");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response.date === "Empty fields") setErrorMessage("Error: one of the fields is empty");
+        if (err.response.data === "Incorrect username or password")
+          setErrorMessage("Error: incorrect username or password");
+        else setErrorMessage("Error: there was a problem");
+      });
   }
   return (
     <div className={styles.page}>
@@ -40,6 +46,7 @@ function Login() {
         <button type="submit" className={styles.btn}>
           Login
         </button>
+        {errorMessage === ""? null : <ErrorMessage message={errorMessage} />}
       </form>
     </div>
   );

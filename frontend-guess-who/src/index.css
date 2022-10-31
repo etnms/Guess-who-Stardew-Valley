@@ -14,7 +14,8 @@ html[data-color-scheme="light"] {
   color-scheme: light;
   --primary: #94b0da;
   --secondary: #dba63b;
-  --tertiary: #3b7bdb;
+  --tertiary: #3874CF;
+  --tertiary-hover: #204884;
   --dark-blue: #232c33;
   --bg: white;
   --bg-secondary: #eeeeee;

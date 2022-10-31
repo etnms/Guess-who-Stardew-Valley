@@ -33,7 +33,7 @@ function Card(props: React.PropsWithChildren<ICards>) {
 
     // JS and server logic
     setIsDiscarded(true);
-    const socket = io("http://127.0.0.1:8000");
+    const socket = io(`${process.env.REACT_APP_SVGW_BACKEND}`);
     const username: string | null = sessionStorage.getItem("username");
     const isCancelled: boolean = false;
     socket.emit("discard", { name, sessionId, username, isCancelled });
@@ -47,7 +47,7 @@ function Card(props: React.PropsWithChildren<ICards>) {
 
     // JS and server logic
     setIsDiscarded(false);
-    const socket = io("http://127.0.0.1:8000");
+    const socket = io(`${process.env.REACT_APP_SVGW_BACKEND}`);
     const username: string | null = sessionStorage.getItem("username");
     const isCancelled: boolean = true;
     socket.emit("discard", { name, sessionId, username, isCancelled });

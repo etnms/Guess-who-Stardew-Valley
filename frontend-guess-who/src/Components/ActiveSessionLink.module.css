@@ -3,11 +3,12 @@
     border-radius: 0.4rem;
     padding: 0.5rem 1rem;
     cursor: pointer;
-    background-color: var(--bg);
+    background-color: var(--tertiary);
+    color: white;
 }
 
 .link:hover {
-    background-color: var(--bg-hover);
+    background-color: var(--tertiary-hover);
     transform: scale(1.05);
     transition: 200ms;
 }

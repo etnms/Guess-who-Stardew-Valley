@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const { pool } = require("../pool");
-const parse = require("postgres-date");
 
 function createGameId(length) {
   let result = "";
@@ -84,7 +83,6 @@ function serverDeleteGame(game_id) {
       console.log(err);
       //return res.status(400).json("Error deleting game");
     } else {
-      console.log("deleted successfully");
       // TO DO if results.row = 0 then means other player; => can't delete
       // return res.status(200).json("Game deleted");
     }

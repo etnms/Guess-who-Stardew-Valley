@@ -9,7 +9,6 @@ exports.verifyToken = (req, res, next) => {
     next();
   } else {
     // Forbidden
-    console.log("forbidden");
     next();
   }
 };

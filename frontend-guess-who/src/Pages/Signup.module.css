@@ -5,6 +5,7 @@
   justify-content: center;
   height: 100vh;
   background-color: var(--bg-secondary);
+  transition: 200ms;
 }
 
 .form {
@@ -15,8 +16,8 @@
   border: 2px solid var(--bg-opposite);
   border-radius: 1rem;
   padding: 8px;
-  height: 85vh;
-  width: 40vw;
+  min-height: 85vh;
+  width: 50vw;
   gap: 0.5rem;
   background-color: var(--bg);
   box-shadow: var(--elevation);

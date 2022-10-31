@@ -6,6 +6,7 @@ import namesData from "../names.json";
 import styles from "./Game.module.css";
 import { io } from "socket.io-client";
 import axios from "axios";
+import ErrorMessage from "../Components/ErrorMessage";
 
 function Game() {
   const { id } = useParams<string>();
@@ -28,17 +29,17 @@ function Game() {
     }
 
     axios
-      .get(`${process.env.REACT_APP_SVGW_BACKEND}/api/games/${id}`, {headers: {authorization: token!}})
-      .then((res) => {
-      })
+      .get(`${process.env.REACT_APP_SVGW_BACKEND}/api/games/${id}`, { headers: { authorization: token! } })
+      .then((res) => {})
       .catch((err) => {
-        navigate("/dashboard")
+        navigate("/dashboard");
       });
 
-    const socket = io("http://127.0.0.1:8000");
+    const socket = io(`${process.env.REACT_APP_SVGW_BACKEND}`);
 
     socket.emit("join", id);
-    socket.on("fullRoom", (roomIsFull) => {
+
+    socket.on("fullRoom" + id, (roomIsFull) => {
       if (roomIsFull) {
         navigate("/dashboard");
         return;
@@ -46,6 +47,7 @@ function Game() {
     });
 
     socket.on("numberPlayers", (args) => {
+      console.log(args)
       setNumberPlayers(args);
     });
 
@@ -119,6 +121,12 @@ function Game() {
       .catch((err) => console.log(err));
   }
 
+  function leavingGame() {
+    navigate("/dashboard");
+    // Wors hack ever to disconnect from socket but it works
+    window.location.reload();
+  }
+
   return (
     <div className={styles.wrapper}>
       <main className={styles.main}>
@@ -129,13 +137,12 @@ function Game() {
           <div className={styles["wrapper-select"]}>
             <h2 className={styles.subtitle}>Pick a character</h2>
 
-            {errorMessage?.length === 0 ? null : (
-              <span className={styles["error-message"]}>{errorMessage}</span>
-            )}
             <div className={styles["card-display"]}>{displayCardsToPick()}</div>
             <span className={styles["selected-text"]}>
               Selected character is: <code>{selectedCard} </code>
             </span>
+
+            {errorMessage?.length === 0 ? null : <ErrorMessage message={errorMessage} />}
             <button onClick={() => confirmSelection()} className={`${styles.btn} ${styles["btn-confirm"]}`}>
               Confirm selection
             </button>
@@ -154,7 +161,7 @@ function Game() {
           </div>
         )}
         <div className={styles["btn-wrapper"]}>
-          <button onClick={() => navigate("/dashboard")} className={`${styles.btn} ${styles["btn-leave"]}`}>
+          <button onClick={() => leavingGame()} className={`${styles.btn} ${styles["btn-leave"]}`}>
             Leave game
           </button>
           <button onClick={() => endGame(id)} className={`${styles.btn} ${styles["btn-end"]}`}>
