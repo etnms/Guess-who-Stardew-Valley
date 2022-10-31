@@ -13,7 +13,7 @@ function ActiveSessionLink(props: React.PropsWithChildren<IActiveSessionProps>) 
 
   return (
     <button onClick={() => navigate(`/games/${sessionId}`)} className={styles.link}>
-      {sessionId} - Ends at {time}
+      {sessionId} - Ends in {time.toString().split(".")[0]} min
     </button>
   );
 }

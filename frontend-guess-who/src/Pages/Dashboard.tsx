@@ -59,7 +59,7 @@ function Dashboard() {
       <ActiveSessionLink
         key={`active_session_${game.session_id}`}
         sessionId={game.session_id}
-        time={game.date.split("Z")[0]}
+        time={game.date}
       />
     ));
   }

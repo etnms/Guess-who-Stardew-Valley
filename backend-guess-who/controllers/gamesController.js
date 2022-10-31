@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { pool } = require("../pool");
+const parse = require("postgres-date");
 
 function createGameId(length) {
   let result = "";
@@ -40,13 +41,55 @@ exports.retrieveActiveGames = (req, res) => {
           console.log(err);
           return res.status(400).json("Error");
         } else {
-          console.log(results.rows)
-          return res.json(results.rows);
+          let validResults = [];
+          results.rows.forEach((element) => {
+            let date = new Date();
+            let nowUtc = Date.UTC(
+              date.getUTCFullYear(),
+              date.getUTCMonth(),
+              date.getUTCDate(),
+              date.getUTCHours(),
+              date.getUTCMinutes(),
+              date.getUTCSeconds()
+            );
+
+            let expirationDate = Date.UTC(
+              element.date.getFullYear(),
+              element.date.getMonth(),
+              element.date.getDate(),
+              element.date.getHours() + 1,
+              element.date.getMinutes(),
+              element.date.getSeconds()
+            );
+
+            if (nowUtc > expirationDate) {
+              serverDeleteGame(element.game_id);
+            } else {
+              let minutesLeft = ((expirationDate - nowUtc) / 1000) / 60;
+              let session = element.session_id;
+              validResults.push({"session_id":session, "date": minutesLeft});
+
+            }
+          });
+          return res.status(200).json(validResults);
         }
       });
     }
   });
 };
+
+function serverDeleteGame(game_id) {
+  pool.query("DELETE FROM games WHERE game_id = $1", [game_id], (err, results) => {
+    if (err) {
+      console.log(err);
+      //return res.status(400).json("Error deleting game");
+    } else {
+      console.log("deleted successfully");
+      // TO DO if results.row = 0 then means other player; => can't delete
+      // return res.status(200).json("Game deleted");
+    }
+  });
+}
 
 exports.deleteGame = (req, res) => {
   const sessionId = req.params.id;
