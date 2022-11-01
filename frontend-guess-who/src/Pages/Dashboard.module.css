@@ -2,8 +2,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     background-color: var(--bg-secondary);
+    min-height: 100vh;
 }
 
 .wrapper {
@@ -17,6 +17,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100%;
 }
 
 .main-title {

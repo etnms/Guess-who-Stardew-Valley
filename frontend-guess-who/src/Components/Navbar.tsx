@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import DarkThemeToggle from "./DarkThemeToggle";
 import styles from "./Navbar.module.css"; 
 
 interface INavbarProps {
@@ -27,6 +28,7 @@ function Navbar(props: React.PropsWithChildren<INavbarProps>) {
   
   return (
     <nav className={styles.nav}>
+      <DarkThemeToggle/>
       {isLoggedIn ? (
         <div className={styles["nav-signed"]}>
           <span className={styles["nav-text"]}>Welcome {username}</span>
@@ -34,8 +36,8 @@ function Navbar(props: React.PropsWithChildren<INavbarProps>) {
         </div>
       ) : (
         <div className={styles["nav-home"]}>
-          <button onClick={() => navigate("/login")}  className={`${styles["btn"]} ${styles["btn-login"]}`}>Login</button>
-          <button onClick={() => navigate("/signup")}  className={`${styles["btn"]} ${styles["btn-sign"]}`}>Sign up</button>
+          <button onClick={() => navigate("/login")} className={`${styles["btn"]} ${styles["btn-login"]}`}>Login</button>
+          <button onClick={() => navigate("/signup")} className={`${styles["btn"]} ${styles["btn-sign"]}`}>Sign up</button>
         </div>
       )}
     </nav>

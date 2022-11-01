@@ -18,13 +18,13 @@
 .card > img {
   height: 64px;
   width: 64px;
-  background-color: white;
+  background-color: var(--bg);
   position: absolute;
   bottom: 0px;
 }
 
 .card > .name {
-  background-color: white;
+  background-color: var(--bg);
   position: absolute;
   top: 5px;
   cursor: pointer;
@@ -34,6 +34,8 @@
   background-color: var(--discarded);
   filter: blur(1px);
 }
+
+
 
 .cancel-btn {
   z-index: 1;

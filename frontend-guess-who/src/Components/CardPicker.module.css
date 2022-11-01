@@ -19,13 +19,13 @@
 .card > img {
     height: 64px;
     width: 64px;
-    background-color: white;
+    background-color: var(--bg);
     position: absolute;
     bottom: 0px;
 }
 
 .card > .name {
-    background-color: white;
+    background-color: var(--bg);
     position: absolute;
     top: 5px;
     cursor: pointer;
@@ -33,4 +33,13 @@
 
 .selected {
     background-color: #e0e0e0;
+}
+
+.selected > img {
+    background-color: #e0e0e0;
+}
+
+.selected > .name {
+    background-color: #e0e0e0;
+    color: var(--bg);
 }

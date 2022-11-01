@@ -9,6 +9,14 @@ function Home() {
   const navigate: NavigateFunction = useNavigate();
 
   useEffect(() => {
+    if (localStorage.getItem("darktheme") === "darktheme") {
+      document.documentElement.setAttribute("data-color-scheme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-color-scheme", "light");
+    }
+  })
+  
+  useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_SVGW_BACKEND}/api/dashboard`, { headers: { authorization: token! } })
       .then((res) => {

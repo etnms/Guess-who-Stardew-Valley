@@ -32,7 +32,7 @@ function Game() {
       .get(`${process.env.REACT_APP_SVGW_BACKEND}/api/games/${id}`, { headers: { authorization: token! } })
       .then((res) => {})
       .catch((err) => {
-        navigate("/dashboard");
+        navigate("/session404");
       });
 
     const socket = io(`${process.env.REACT_APP_SVGW_BACKEND}`);

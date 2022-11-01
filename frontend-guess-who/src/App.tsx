@@ -5,6 +5,7 @@ import Signup from "./Pages/Signup";
 import Game from "./Pages/Game";
 import Home from "./Pages/Home";
 import PageNotFound from "./Pages/PageNotFound";
+import WrongSession from "./Pages/WrongSession";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/games/:id" element={<Game />} />
+        <Route path="/session404" element={<WrongSession/>}/>
         <Route path="*" element={<PageNotFound/>}/>
       </Routes>
     </BrowserRouter>

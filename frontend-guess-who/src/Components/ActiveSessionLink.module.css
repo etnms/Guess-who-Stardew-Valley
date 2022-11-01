@@ -4,7 +4,8 @@
     padding: 0.5rem 1rem;
     cursor: pointer;
     background-color: var(--tertiary);
-    color: white;
+    color: var(--bg);
+    border: none;
 }
 
 .link:hover {
